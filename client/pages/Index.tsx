@@ -182,11 +182,11 @@ export default function Index() {
     }
   };
 
-  // Get all unique tags
-  const allTags = [...new Set(posts.flatMap((post) => post.tags))];
+  // Get all unique tags - only if posts is available
+  const allTags = posts ? [...new Set(posts.flatMap((post) => post.tags))] : [];
 
-  // Filter featured posts
-  const featuredPosts = posts.filter((post) => post.featured);
+  // Filter featured posts - only if posts is available
+  const featuredPosts = posts ? posts.filter((post) => post.featured) : [];
 
   const handleEditPost = (post: BlogPost) => {
     setEditingPost(post);
@@ -248,7 +248,7 @@ export default function Index() {
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-3">
                 <BookOpen className="w-6 h-6 text-primary" />
               </div>
-              <div className="text-2xl font-bold">{posts.length}</div>
+              <div className="text-2xl font-bold">{posts ? posts.length : 0}</div>
               <div className="text-sm text-muted-foreground">Total Posts</div>
             </div>
             <div className="text-center p-6 rounded-lg bg-card border shadow-sm">
@@ -360,7 +360,7 @@ export default function Index() {
               />
             ))}
           </div>
-        ) : posts.length === 0 ? (
+        ) : (!posts || posts.length === 0) ? (
           <div className="text-center py-16">
             <BookOpen className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">No posts found</h3>
@@ -383,7 +383,7 @@ export default function Index() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {posts.map((post) => (
+            {posts && posts.map((post) => (
               <BlogPostCard
                 key={post.id}
                 post={post}

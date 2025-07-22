@@ -16,7 +16,6 @@ export function getDbPool() {
       max: 5, // Reduced for serverless environment
       idleTimeoutMillis: 10000, // Shorter idle timeout for serverless
       connectionTimeoutMillis: 5000, // Increased timeout for slower connections
-      acquireTimeoutMillis: 5000, // Max time to wait for connection from pool
       statement_timeout: 10000, // Max query execution time
     });
 
